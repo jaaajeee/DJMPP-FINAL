@@ -43,7 +43,7 @@ router.post('/', async (req, res, next) => {
 });
 
 router.put('/:recordId',async (req, res, next) => {
-    const foundedId = req.params.id;
+    const foundedId = req.params._id;
     const body = req.body;
     await RecordModel.findByIdAndUpdate({_id:foundedId}, body,{runValidators: true})
     .then(() => {
@@ -58,8 +58,9 @@ router.put('/:recordId',async (req, res, next) => {
 });
   
 router.delete('/:recordId', async (req, res, next) => {
-    const foundedId = req.params.id;
-    await RecordModel.findByIdAndDelete({_id:foundedId})
+    const foundedId = req.params._id;
+    await RecordModel.findOneAndDelete({id:foundedId})
+
     .then(() => {
     res.status(204).send('delete success'); // 204 = No content which mean it successfully removed
     })
